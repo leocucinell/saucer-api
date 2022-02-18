@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 //SECTION: Route based middleware
 app.use("/customer", routes.customer);
+app.use('/restuarant', routes.restuarant);
 
 //SECTION: Server binding
 const port = process.env.PORT || 3500

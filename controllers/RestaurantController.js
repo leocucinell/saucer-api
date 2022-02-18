@@ -18,7 +18,7 @@ const restuarantSignOut = (req, res) => {
     res.send('Restaurant sign out');
 }
 
-//GET: /reservations
+//GET: /reservation
 const retrieveRestuarantReservations = (req, res) => {
     res.send('Retrieve Restuarant Reservations');
 }

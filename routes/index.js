@@ -1,3 +1,4 @@
 module.exports = {
-    customer: require('./CustomerRoutes')
+    customer: require('./CustomerRoutes'),
+    restuarant: require('./RestaurantRoutes')
 }

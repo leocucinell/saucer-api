@@ -9,14 +9,11 @@ router.route('/reservation')
     .get(cont.customer.retrieveCustomerReservations)
     .post(cont.customer.addCustomerReservation);
 
-router.route('/login')
-    .post(cont.customer.customerLogin);
+router.route('/login').post(cont.customer.customerLogin);
 
-router.route('/signup')
-    .post(cont.customer.customerSignUp);
+router.route('/signup').post(cont.customer.customerSignUp);
 
-router.route('/signout')
-    .post(cont.customer.customerSignOut);
+router.route('/signout').post(cont.customer.customerSignOut);
 
 //SECTION: Exports
-module.exports = router
+module.exports = router;
