@@ -23,7 +23,7 @@ const customerLogin = async (req, res) => {
 
         if(UserCheck){
             //Use bcrypt to check if the password sent is the same as the one saved
-            bcrypt.compare(req.body.password, UserCheck.profile.password, (err, result) => {
+            bcrypt.compare(req.body.password, UserCheck.profile.password, async (err, result) => {
                 if(err){
                     console.log(`Error hashing password: ${err}`);
                     res.send('Error logging in, check password');
@@ -41,14 +41,15 @@ const customerLogin = async (req, res) => {
                         {expiresIn: '1w'}
                     );
                     //update the client to include the refresh token
-                    const updateUser = prisma.Profile.update({
+                    const updatedUser = await prisma.profile.update({
                         where: {
                             id: UserCheck.profile.id
-                        }, 
+                        },
                         data: {
-                            refreshToken: refreshToken
+                            refreshToken
                         }
-                    })
+                    });
+                    
                     res.status(200).json({
                         message: 'Welcome back!',
                         userProfile: UserCheck,
