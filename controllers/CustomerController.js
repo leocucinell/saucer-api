@@ -1,15 +1,62 @@
 //SECTION: Imports
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //SECTION: Controller methods
 //Base: <url>/customer
 
 //POST: /login
-const customerLogin = (req, res) => {
+const customerLogin = async (req, res) => {
     //check to see if the user exists
-    //if it does, then check to see if their credentials work
+    try{
+        const UserCheck = await prisma.User.findUnique({
+            where: {
+                name: req.body.name
+            },
+            //Also sends back the foreign profile of the user
+            include: {
+                profile: true
+            }
+        });
+
+        if(UserCheck){
+            //Use bcrypt to check if the password sent is the same as the one saved
+            bcrypt.compare(req.body.password, UserCheck.profile.password, (err, result) => {
+                if(err){
+                    console.log(`Error hashing password: ${err}`);
+                    res.send('Error logging in, check password');
+                }
+                if(result){
+                    //items are the same! log the user in(send back jwt to access other functions)
+                    const accessToken = jwt.sign(
+                        {"username": UserCheck.name},
+                        process.env.ACCESS_TOKEN_SECRET,
+                        {expiresIn: '1d'}
+                    );
+                    const refreshToken = jwt.sign(
+                        {"username": UserCheck.name},
+                        process.env.REFRESH_TOKEN_SECRET,
+                        {expiresIn: '1w'}
+                    );
+                    res.status(200).json({
+                        message: 'Welcome back!',
+                        userProfile: UserCheck,
+                        accessToken,
+                        refreshToken
+                    })
+                } else {
+                    //wrong password!
+                    res.send('Wrong password, try again!')
+                }
+            });
+        }
+    } catch(err) {
+        console.log(`Error: ${err}`);
+        res.send('Error logging in, please try again.')
+    }
+    //check with bcrypt to see if the password and hash compare
 }
 
 //POST: /signup
