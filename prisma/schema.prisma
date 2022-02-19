@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Reservation {
+  id Int @id @default(autoincrement())
+  notes String
+  author Profile @relation(fields: [authorId], references: [id])
+  authorId Int
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  reservations Reservation[]
+  email String 
+  phone String
+  customer_owner User? @relation(fields: [owner_user_id], references: [id])
+  owner_user_id Int
+  restuarant Restuarant? //Foreign Key
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name String 
+  dietary_restrictions String
+  profile Profile? //Foreign Key
+}
+
+model Restuarant {
+  id Int @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  title String
+  Location String
+  //The restuarant owner is THIS user
+  restuarant_owner Profile @relation(fields: [owner_id], references: [id])
+  owner_id Int
+}
