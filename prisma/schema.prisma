@@ -26,6 +26,7 @@ model Profile {
   customer_owner User? @relation(fields: [owner_user_id], references: [id])
   owner_user_id Int
   restuarant Restuarant? //Foreign Key
+  refreshToken String?
 }
 
 model User {

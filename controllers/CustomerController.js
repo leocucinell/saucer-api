@@ -40,6 +40,15 @@ const customerLogin = async (req, res) => {
                         process.env.REFRESH_TOKEN_SECRET,
                         {expiresIn: '1w'}
                     );
+                    //update the client to include the refresh token
+                    const updateUser = prisma.Profile.update({
+                        where: {
+                            id: UserCheck.profile.id
+                        }, 
+                        data: {
+                            refreshToken: refreshToken
+                        }
+                    })
                     res.status(200).json({
                         message: 'Welcome back!',
                         userProfile: UserCheck,
