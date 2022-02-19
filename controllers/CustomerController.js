@@ -117,8 +117,24 @@ const customerSignUp = async (req, res) => {
 }
 
 //POST: /signout
-const customerSignOut = (req, res) => {
-    res.send('Customer sign out');
+const customerSignOut = async (req, res) => {
+    //remove the refresh token from the users profile. 
+    try{
+        const updatedUser = await prisma.profile.update({
+            where: {
+                id: req.body.profile_id
+            }, 
+            data: {
+                refreshToken: null
+            }
+        });
+        res.status(200).json({
+            message: 'Successfully logged out.'
+        })
+    } catch(err) {
+        console.log(`Error: ${err}`);
+        res.send('Error logging out. Refresh token saved')
+    }
 }
 
 //GET: /reservation
