@@ -22,6 +22,7 @@ model Profile {
   reservations Reservation[]
   email String 
   phone String
+  password String
   customer_owner User? @relation(fields: [owner_user_id], references: [id])
   owner_user_id Int
   restuarant Restuarant? //Foreign Key
@@ -31,7 +32,7 @@ model User {
   id Int @id @default(autoincrement())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  name String 
+  name String @unique
   dietary_restrictions String
   profile Profile? //Foreign Key
 }

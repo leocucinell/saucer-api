@@ -1,4 +1,6 @@
 //SECTION: Imports
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient()
 
 //SECTION: Controller methods
 //Base: <url>/restuarant
