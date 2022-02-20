@@ -5,11 +5,6 @@ const prisma = new PrismaClient()
 //SECTION: Controller methods
 //Base: <url>/restuarant
 
-//POST: /login
-const restuarantLogin = (req, res) => {
-    res.send('Restaurant login');
-}
-
 //POST: /signup
 const restuarantSignUp = async (req, res) => {
     try{
@@ -34,7 +29,7 @@ const restuarantSignUp = async (req, res) => {
                 message: 'Successfully created resturaunt!',
                 resturaunt: createdResturaunt
             });
-            
+
         } else {
             res.send('Restuarant already registered at that location.')
         }
@@ -42,11 +37,6 @@ const restuarantSignUp = async (req, res) => {
         console.log(`Error: ${err}`);
         res.send('Error creating new restuarant. please try again');
     }
-}
-
-//POST: /signout
-const restuarantSignOut = (req, res) => {
-    res.send('Restaurant sign out');
 }
 
 //GET: /reservation
@@ -61,9 +51,7 @@ const addRestuarantReservation = (req, res) => {
 
 //SECTION: Exports
 module.exports = {
-    restuarantLogin,
     restuarantSignUp,
-    restuarantSignOut,
     retrieveRestuarantReservations,
     addRestuarantReservation
 }
