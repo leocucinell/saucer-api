@@ -43,7 +43,7 @@ model Restuarant {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   title String
-  Location String
+  Location String @unique
   //The restuarant owner is THIS user
   restuarant_owner Profile @relation(fields: [owner_id], references: [id])
   owner_id Int
