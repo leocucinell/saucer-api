@@ -41,7 +41,11 @@ const restuarantSignUp = async (req, res) => {
 
 //GET: /reservation
 const retrieveRestuarantReservations = (req, res) => {
-    res.send('Retrieve Restuarant Reservations');
+    try{
+        
+    } catch {
+        res.send('Error recieving reservations')
+    }
 }
 
 //POST: /reservation

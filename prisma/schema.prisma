@@ -13,6 +13,8 @@ datasource db {
 model Reservation {
   id Int @id @default(autoincrement())
   notes String
+  resturaunt Restuarant @relation(fields: [resturaunt_owner_id], references: [id])
+  resturaunt_owner_id Int
   author Profile @relation(fields: [authorId], references: [id])
   authorId Int
 }
@@ -47,4 +49,5 @@ model Restuarant {
   //The restuarant owner is THIS user
   restuarant_owner Profile @relation(fields: [owner_id], references: [id])
   owner_id Int
+  reservations Reservation[]
 }
